@@ -13,12 +13,57 @@ const objectOfAtts={
 const number= 1
 const liststring='a,b,c,d,e,f'
 const convertToId =(data)=> data.split(',').join('-')
+// sử dụng ref để khai báo trạng thái
+import { ref,reactive } from 'vue'
+const count = ref(1)
+const Descresease = ()=> count.value--
+// sử dụng ref trong Object, array
+const object= ref({
+  number:2,
+  user:{
+    age:18,
+    name:'hau'
+  },
+  array:[1,2,3]
+})
+// reactive
+const object1= reactive({
+  number:2,
+  user:{
+    age:18,
+    name:'hau'
+  },
+  array:[1,2,3]
+})
+const change = ()=>{
+  object.value.number++
+  object.value.user.age++
+  object.value.array.push(5)
+}
+// sử dụng reactive trong object
+const changeReactive = ()=>{
+  object1.number++
+  object1.user.age++
+  object1.array.push(5)
+}
 </script>
 
 <template>
   
   <h1>syntax</h1>
   <p>message:{{ message }}</p>
+<div><h1>User</h1>
+  <p>Name :{{ object.user.name }}</p>
+  <p>Age :{{ object.user.age }}</p>
+  <p>Array{{ object.array }}</p>
+
+</div>
+<div><h1>User reactive</h1>
+  <p>Name :{{ object1.user.name }}</p>
+  <p>Age :{{ object1.user.age }}</p>
+  <p>Array{{ object1.array }}</p>
+
+</div>
  
   <div :id="`list-${id}`"></div>
   <span v-html="rawhtml"></span>
@@ -26,33 +71,20 @@ const convertToId =(data)=> data.split(',').join('-')
   <button v-bind="objectOfAtts">click ???</button>
   <button :id="liststring.split(',').join('-')">Number:{{ number*2 }}</button>
   <span>{{ convertToId(liststring) }}</span>
+
+
+<h1>Sử dụng ref</h1>
+<span>{{ count }}</span>
+<button @click="count++">Incresease</button>
+<button @click="Descresease" >Descresease</button>
+
+<button @click="change">Change number</button>
+<button @click="changeReactive">Change number reactive</button>
+<p>{{ object.number }}</p>
+
+
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
-}
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
 </style>
