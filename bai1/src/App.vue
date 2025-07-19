@@ -10,15 +10,22 @@ const objectOfAtts={
     color:'blue'
   }
 }
+const number= 1
+const liststring='a,b,c,d,e,f'
+const convertToId =(data)=> data.split(',').join('-')
 </script>
 
 <template>
   
   <h1>syntax</h1>
   <p>message:{{ message }}</p>
+ 
+  <div :id="`list-${id}`"></div>
   <span v-html="rawhtml"></span>
   <button :id="buttonId" :disabled="isButtondisable">{{ isButtondisable ? 'disabled':'click here' }}</button>
   <button v-bind="objectOfAtts">click ???</button>
+  <button :id="liststring.split(',').join('-')">Number:{{ number*2 }}</button>
+  <span>{{ convertToId(liststring) }}</span>
 </template>
 
 <style scoped>
