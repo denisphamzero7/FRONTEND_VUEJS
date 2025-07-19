@@ -1,4 +1,5 @@
 <script setup>
+
 const message = 'hello world'
 const rawhtml ='<div><h1>Title</h1> <span style="color:red"> đây là đỏ </span></div>'
 const buttonId="button-id"
@@ -15,11 +16,13 @@ const liststring='a,b,c,d,e,f'
 const convertToId =(data)=> data.split(',').join('-')
 // sử dụng ref để khai báo trạng thái
 import { ref,reactive, nextTick } from 'vue'
+import computed from './Component/computed.vue'
+import Bindingclass from './Component/Bindingclass.vue'
 const count = ref(1)
 const Descresease = async()=> {
   count.value--
   console.log(document.getElementById('count').innerText);
-  await nextTick()
+  await nextTick() 
   console.log(document.getElementById('count').innerText);
 }
 // sử dụng ref trong Object, array
@@ -87,6 +90,13 @@ const changeReactive = ()=>{
 <button @click="changeReactive">Change number reactive</button>
 <p>{{ object.number }}</p>
 
+<div>
+  <h1>computed</h1>
+  <computed/>
+</div>
+<div><h1>Binding class</h1>
+  <Bindingclass/>
+</div>
 
 </template>
 
