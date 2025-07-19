@@ -14,9 +14,14 @@ const number= 1
 const liststring='a,b,c,d,e,f'
 const convertToId =(data)=> data.split(',').join('-')
 // sử dụng ref để khai báo trạng thái
-import { ref,reactive } from 'vue'
+import { ref,reactive, nextTick } from 'vue'
 const count = ref(1)
-const Descresease = ()=> count.value--
+const Descresease = async()=> {
+  count.value--
+  console.log(document.getElementById('count').innerText);
+  await nextTick()
+  console.log(document.getElementById('count').innerText);
+}
 // sử dụng ref trong Object, array
 const object= ref({
   number:2,
@@ -65,7 +70,7 @@ const changeReactive = ()=>{
 
 </div>
  
-  <div :id="`list-${id}`"></div>
+  
   <span v-html="rawhtml"></span>
   <button :id="buttonId" :disabled="isButtondisable">{{ isButtondisable ? 'disabled':'click here' }}</button>
   <button v-bind="objectOfAtts">click ???</button>
@@ -74,7 +79,7 @@ const changeReactive = ()=>{
 
 
 <h1>Sử dụng ref</h1>
-<span>{{ count }}</span>
+<span id="count">{{ count }}</span>
 <button @click="count++">Incresease</button>
 <button @click="Descresease" >Descresease</button>
 
