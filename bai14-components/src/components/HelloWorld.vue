@@ -1,17 +1,21 @@
 <script setup>
-const props = defineProps(["greetingMessage"])
-console.log(props);
+import LocaleComponent from './LocaleComponent.vue'
+import {inject} from "vue"
+const locale = inject("locale")
+// const props = defineProps({
+//   count:Number,
+//   locale:String
+// })
+
+// console.log(props);
 // props tĩnh : giá trị kiểu string ( nếu không có :)
 </script>
 
 <template>
   <div class="greetings">
-    <h1 class="green">{{ greetingMessage }}</h1>
-    <h3>
-      You’ve successfully created a project with
-      <a href="https://vite.dev/" target="_blank" rel="noopener">Vite</a> +
-      <a href="https://vuejs.org/" target="_blank" rel="noopener">Vue 3</a>.
-    </h3>
+    <h1 class="green">{{ count }}</h1>
+
+     <LocaleComponent :locale="locale"/>
   </div>
 </template>
 

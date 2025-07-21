@@ -4,15 +4,28 @@ import HelloWorld from './components/HelloWorld.vue'
 import ButtonCount from './components/ButtonCount.vue'
 import ButtonEvent from './components/ButtonEvent.vue'
 import ChildrenComponent from './components/ChildrenComponent.vue'
-import { ref } from 'vue'
+import ModelComponent from './components/ModelComponent.vue'
+import { ref, watchEffect,provide } from 'vue'
 const datacount = ref(0)
 const message = ref('hello worlk')
 const sayhi = () => {
   console.log('sayHi')
 }
-const increaseBy = (number)=>{
+const Email = ref('')
+const Username = ref('')
+watchEffect(() => {
+  console.log(Email.value)
+})
+const changEmailDefaultFromParent = () => {
+  Email.value = 'chang@gmail.com'
+}
+const changusernamelDefaultFromParent = () => {
+  Username.value = 'pham ngọc hậu'
+}
+const increaseBy = (number) => {
   datacount.value = datacount.value + number
 }
+provide("locale","vietnam")
 </script>
 
 <template>
@@ -20,8 +33,9 @@ const increaseBy = (number)=>{
     <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
 
     <div class="wrapper">
-      <HelloWorld :greetingMessage="message" />
+      <HelloWorld :locale="locale" />
       <ButtonCount :init="19" />
+      <h1>Truyền dữ liệu define prop</h1>
       <ChildrenComponent
         propA="12"
         :propB="3"
@@ -32,9 +46,27 @@ const increaseBy = (number)=>{
         :propG="sayhi"
         :disable="true"
       />
-      <span></span>
+      <span> gọi event từ define emit</span>
       <span>Count: {{ datacount }}</span>
-      <ButtonEvent @increase="datacount++" @increaseByTwoTimes="datacount=datacount+2" @increase-by="increaseBy "/>
+      <ButtonEvent
+        @increase="datacount++"
+        @increaseByTwoTimes="datacount = datacount + 2"
+        @increase-by="increaseBy" 
+      > <template #increase>increase</template>
+      <template #increaseByTwoTimes>increaseByTwoTimes</template>
+      <template #increaseBy>increaseBy</template>
+    </ButtonEvent>
+      <div>
+        <h1>đây là global component</h1>
+        <ComponentA />
+      </div>
+      <div>
+        <!---v-model:email="Email" truyền đối số trong model-->
+        <h1>v-model</h1>
+        <ModelComponent v-model:email="Email" v-model:username.capitalize="Username" />
+        <button @click="changEmailDefaultFromParent">seEmailDefault</button>
+        <button @click="changusernamelDefaultFromParent">setUserNameDefault</button>
+      </div>
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
